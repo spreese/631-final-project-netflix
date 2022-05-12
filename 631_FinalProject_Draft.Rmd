@@ -15,7 +15,7 @@ Netflix is one of the most popular streaming services with over 15,000 titles ra
 
 ## What
 
-My final project is a statistical analysis report on Netflix data. I found a public data set on kaggle.com that contains key information (genre, language(s), rating, runtime, IMDb score, Rotten Tomatoes score, etc) on over 15,000 titles on Netflix. Within this report, you will find graphs summarizing the various data columns, descriptive statistics, correlations/relationships between variables, and predictions. 
+My final project is a statistical analysis report on Netflix data. I found a public data set on kaggle.com that contains key information (genre, language(s), rating, runtime, IMDb score, Rotten Tomatoes score, etc) on over 15,000 titles on Netflix [1]. Within this report, you will find graphs summarizing the various data columns, descriptive statistics, correlations/relationships between variables, and predictions. 
 
 ## Why
 
@@ -46,7 +46,7 @@ barplot(table(SeperateGenres$Genre), main="Genres", ylim = c(0, 7000), names.arg
 
 **Note:** this R chunk required the dplyr library for the %>% function and the tidyr library for the seperate_rows function. 
 
-Based on this graph, it can be seen that Drama is the genre with the most content on Netlfix. This is followed by Comedy, Thriller, and Action. To see the exact number of titles within a specfic genre, use a table. For example, how many titles within Netflix are labeled "Comedy?"
+Based on this graph, it can be seen that Drama is the genre with the most content on Netlfix. This is followed by Comedy, Thriller, and Action. To see the exact number of titles within a specific genre, use a table. For example, how many titles within Netflix are labeled "Comedy?"
 
 
 ```{r}
@@ -154,7 +154,7 @@ The standard deviation is 1.147
 hist(TheData$Rotten.Tomatoes.Score, main = "Rotten Tomatoes Score", xlab = "Rotten Tomatoes Score", col = "yellow", breaks = 20)
 ```
 
-The above graph displays a distribution of the Rotten Tomatoes Scores of Netflix content.Looking at the graph, it can be seen that the distribution is unimodal with a left-skew.Below is the mean, median, and standard deviation. 
+The above graph displays a distribution of the Rotten Tomatoes Scores of Netflix content. Looking at the graph, it can be seen that the distribution is unimodal with a left-skew.Below is the mean, median, and standard deviation. 
 
 ### Mean
 
@@ -260,11 +260,13 @@ Assumptions of Linear Regression:
 1. The Y-values, errors, are independent. 
 2. The y values can be expressed as a linear function of the x variable. 
 3. The variations around the regression line is constant.
-4. The y values (or residuals) are normally distributed. 
+4. The y values (or residuals) are normally distributed.[2] 
 
+Notice in the code below the Rotten Tomatoes Score has been divided by 10. This accounts for the IMDb being out of 10 and Rotten Tomatoes being out of 100. Now the two scores are  comparable which allows for more accurate calculations and plots. 
 
 ```{r}
-LinReg <- lm(IMDbvsRotten$IMDb.Score ~ IMDbvsRotten$Rotten.Tomatoes.Score)
+AdjustScore <- IMDbvsRotten$Rotten.Tomatoes.Score / 10
+LinReg <- lm(IMDbvsRotten$IMDb.Score ~ AdjustScore)
 par(mfrow = c(2, 2))
 plot(LinReg)
 ```
@@ -283,7 +285,7 @@ summary(LinReg)
 
 The slope and intercept can be found using the summary table above. 
 
-**The line of regression is y = 0.027x + 4.83** Below is the scatter plot with the line of regression in red. 
+**The line of regression is y = 0.271x + 4.83** Below is the scatter plot with the line of regression in red. 
 
 ```{r}
 plot(x= IMDbvsRotten$Rotten.Tomatoes.Score, y= IMDbvsRotten$IMDb.Score, xlab = "Rotten Tomatoes Score", ylab = "IMDb Score")
@@ -303,16 +305,16 @@ abline(LinReg, col = "red")
 
 ## Topic 3: Summarizing Data
 
-  In chapter two of the textbook (OpenIntro Statistics, Fourth Edition), we learned about summarizing numerical and categorical data. At the beginning of this report, I used bar plots, contingency tables, and one proportion table to summarize the categorical data of the Genre, Languages, Movie vs TV Series, Ratings, and Runtime columns of the Netflix data. Then, I used histograms to show the data density of numerical data of the IMDb Score, Rotten Tomatoes Score, and Box Office columns. I was also able to determine the distribution of the numerical data using the histograms. Lastly, to visualize the relationships between the numerical data, I used scatterplots. This allowed me to determine the kind of relationship occurring between the various numerical data. 
+  In chapter two of the textbook, we learned about summarizing numerical and categorical data [2]. At the beginning of this report, I used bar plots, contingency tables, and one proportion table to summarize the categorical data of the Genre, Languages, Movie vs TV Series, Ratings, and Runtime columns of the Netflix data. Then, I used histograms to show the data density of numerical data of the IMDb Score, Rotten Tomatoes Score, and Box Office columns. I was also able to determine the distribution of the numerical data using the histograms. Lastly, to visualize the relationships between the numerical data, I used scatterplots. This allowed me to determine the kind of relationship occurring between the various numerical data. 
   Although these topics are fairly simple, I found it helpful to practice creating these graphs in R multiple times. I encountered many errors, but I was able to solve them with trial and error, which is a rewarding process. Analyzing graphs is also an important skill, which I was able to gain experience in during the analysis of the Netflix data. 
   
 ## Topic 4: Descriptive Statistics
 
-  Descriptive statistics generally refers to measures of central tendency and measures of variability, so mean, median, mode, and standard deviation. In this report, I focused on the mean, median, and standard deviation of the three columns of numerical data: IMDb Score, Rotten Tomatoes Score, and Box Office. Once I calculated these values, I provided a brief analysis of what the value means in terms of the overall data set. Again, these topics are fairly simple, but because I am new to statistics, I found it helpful to gain experience calculating and analyzing the data using basic, but core calculations in data analysis. 
+  Descriptive statistics generally refers to measures of central tendency and measures of variability, so mean, median, mode, and standard deviation [2]. In this report, I focused on the mean, median, and standard deviation of the three columns of numerical data: IMDb Score, Rotten Tomatoes Score, and Box Office. Once I calculated these values, I provided a brief analysis of what the value means in terms of the overall data set. Again, these topics are fairly simple, but because I am new to statistics, I found it helpful to gain experience calculating and analyzing the data using basic, but core calculations in data analysis. 
 
 ## Topic 5: Linear Regression
 
-  Linear regression attempts to model a linear relationship between two numerical variables, an explanatory (x) and response (y) variable. We learned about this topic during lecture and it was also discussed in the textbook (OpenIntro Statistics, Fourth Edition). In the report above, I performed linear regression and found the line of best fit for the relationship between IMDb Score (response variable) and Rotten Tomatoes Score (explanatory variable). This was only done once I discovered that the four assumptions of linear regression were met. If one of the conditions was not true, then I would not have attempted to model the relationship. 
+  Linear regression attempts to model a linear relationship between two numerical variables, an explanatory (x) and response (y) variable. We learned about this topic during lecture and it was also discussed in our textbook [2]. In the report above, I performed linear regression and found the line of best fit for the relationship between IMDb Score (response variable) and Rotten Tomatoes Score (explanatory variable). This was only done once I discovered that the four assumptions of linear regression were met. If one of the conditions was not true, then I would not have attempted to model the relationship. 
   Despite reading the textbook and listening to lecture, I still found this concept a bit confusing. However, I wanted to challenge myself to at least attempt linear regression in this report, so I replayed the lecture that went over linear regression in R and then gave it a shot. Although I am not sure if I did it correctly, I learned a lot and gained experience on this topic. 
 
 # Conclusion
@@ -321,3 +323,9 @@ abline(LinReg, col = "red")
   Before starting the final project, I was still struggling with R because it is much different from other coding languages. I found myself constantly referring to old assignments in order to remember how to execute commands or use and understand functions. After the final project, I feel like I have a much firmer grasp on the basics of R and even a few advanced features (data cleaning). I'm now able to code commands and functions from memory and I know what they do and how as opposed to executing functions because the assignment told me to do it in order to get the desired result. 
   In addition to gaining knowledge in R, I also have a better understanding of descriptive statistics (especially distribution and standard deviation) and linear regression. This project forced me to dive deeper into these concepts in order to understand the Netflix data well enough to analyze and describe the results. 
   While I'm still not an expert in R or statistics by any means, I feel much more confident in my skills in R and my ability to perform basic statistical calculations. 
+  
+# References
+
+[1] Gupta, Ashish. netflix-rotten-tomatoes-metacritic-imdb. Kaggle, 2021. Web. 18 April 2022. <https://www.kaggle.com/datasets/ashishgup/netflix-rotten-tomatoes-metacritic-imdb?resource=download>
+
+[2] Diez, David, Cetinkaya-Rundel, Mine, Barr, Christopher D. OpenIntro Statistics. 4th ed., OpenIntro, 2019. 
